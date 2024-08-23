@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Painel do Administrador</h1>
+        <button onclick="location.href='{{ url_for('responder_os') }}'" class="btn">Responder O.S.</button>
+        <button onclick="location.href='{{ url_for('os_antigas') }}'" class="btn">OS Antigas</button>
+        <button onclick="location.href='{{ url_for('relatorio_mensal') }}'" class="btn">Relatório Mensal</button>
+        <button onclick="location.href='{{ url_for('logout') }}'" class="btn">Logout</button>
+    </div>
+</body>
+</html>

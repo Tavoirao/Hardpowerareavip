@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abrir O.S.</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        select {
+            font-size: 1.2rem;  /* Aumenta o tamanho da fonte dentro da option box */
+            padding: 10px;      /* Aumenta o padding para deixar a box maior */
+            width: 100%;        /* Deixa a option box ocupar a largura total disponível */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Abrir O.S.</h1>
+        <form method="post" enctype="multipart/form-data">
+            <!-- Campos invisíveis -->
+            <input type="hidden" id="username" name="username" value="{{ current_user.username }}">
+            <input type="hidden" id="os_number" name="os_number" value="{{ os_number }}">
+
+            <label for="guarantee">É Garantia?</label>
+            <select id="guarantee" name="guarantee" required>
+                <option value="Sim">Sim</option>
+                <option value="Nao">Não</option>
+            </select>
+
+            <label for="serial_number">Número de Série:</label>
+            <input type="text" id="serial_number" name="serial_number" required>
+
+            <label for="owner_name">Nome do Proprietário:</label>
+            <input type="text" id="owner_name" name="owner_name" required>
+
+            <label for="owner_phone">Número do Proprietário:</label>
+            <input type="text" id="owner_phone" name="owner_phone" required>
+
+            <label for="product">Produto:</label>
+            <select id="product" name="product" required>
+                {% for product in products %}
+                <option value="{{ product.id }}">{{ product.product_name }} - {{ product.impedance }} - {{ product.size_in_inches }}"</option>
+                {% endfor %}
+            </select>
+
+            <label for="files">Arquivos (até 10):</label>
+            <input type="file" id="files" name="files" multiple accept="image/*, application/pdf">
+
+            <label for="observations">Observações:</label>
+            <textarea id="observations" name="observations" rows="6" style="width:100%;"></textarea>
+
+            <button type="submit" class="btn">Enviar O.S.</button>
+        </form>
+    </div>
+</body>
+</html>

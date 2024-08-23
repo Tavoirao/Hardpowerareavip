@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responder O.S.</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .os-item {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label, p {
+            font-size: 1.2rem;
+        }
+
+        a {
+            color: #ff9900;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        input, select, textarea {
+            font-size: 1.2rem;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: none;
+            background-color: #444;
+            color: #fff;
+        }
+
+        button {
+            font-size: 1.5rem;
+            color: white;
+            background-color: red;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: darkred;
+        }
+
+        hr {
+            border: 1px solid #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Responder O.S.</h1>
+        {% for os in os_list %}
+        <div class="os-item">
+            <h2>O.S. {{ os.os_number }}</h2>
+            <p><strong>Usuário:</strong> {{ os.username }}</p>
+            <p><strong>Número de Série:</strong> {{ os.serial_number }}</p>
+            <p><strong>Nome do Proprietário:</strong> {{ os.owner_name }}</p>
+            <p><strong>Número do Proprietário:</strong> {{ os.owner_phone }}</p>
+            <p><strong>Produto:</strong> {{ os.product_name }} - {{ os.impedance }} - {{ os.size_in_inches }}"</p>
+            <p><strong>Observações:</strong> {{ os.observations }}</p>
+
+            <p><strong>Arquivos Enviados:</strong></p>
+            <ul>
+                {% for file in os.files %}
+                <li><a href="{{ url_for('static', filename='uploads/' ~ file.filename) }}" target="_blank">{{ file.filename }}</a></li>
+                {% endfor %}
+            </ul>
+
+            <form method="POST">
+                <input type="hidden" name="os_id" value="{{ os.id }}">
+                <label for="is_warranty_{{ os.id }}">É Garantia?</label>
+                <select name="is_warranty" id="is_warranty_{{ os.id }}">
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+                <br>
+                <label for="justification_{{ os.id }}">Justificativa:</label>
+                <textarea name="justification" id="justification_{{ os.id }}" rows="4" cols="50"></textarea>
+                <br>
+                <button type="submit">Responder</button>
+            </form>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+</body>
+</html>

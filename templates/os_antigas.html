@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O.S. Antigas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>O.S. Antigas</h1>
+        {% for os in archived_os_list %}
+        <div class="os-item">
+            <h2>O.S. {{ os.os_number }}</h2>
+            <p><strong>Usuário:</strong> {{ os.username }}</p>
+            <p><strong>Número de Série:</strong> {{ os.serial_number }}</p>
+            <p><strong>Nome do Proprietário:</strong> {{ os.owner_name }}</p>
+            <p><strong>Número do Proprietário:</strong> {{ os.owner_phone }}</p>
+            <p><strong>Produto:</strong> {{ os.product_name }} - {{ os.impedance }} - {{ os.size_in_inches }}"</p>
+            <p><strong>Observações:</strong> {{ os.observations }}</p>
+            <p><strong>Veredito Final da Garantia:</strong> {{ os.final_verdict }}</p>
+            <p><strong>Justificativa:</strong> {{ os.justification }}</p>
+            <p><strong>Arquivos:</strong></p>
+            <ul>
+                {% for file in os.files %}
+                <li><a href="{{ url_for('static', filename='uploads/' ~ file.filename) }}" target="_blank">{{ file.filename }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <hr>
+        {% endfor %}
+    </div>
+</body>
+</html>

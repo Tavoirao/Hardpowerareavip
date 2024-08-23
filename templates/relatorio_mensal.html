@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Mensal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- jQuery UI CSS and JS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        .relatorio-item {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        label, p {
+            font-size: 1.2rem;
+        }
+
+        input, select {
+            font-size: 1.2rem;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            font-size: 1.5rem;
+            color: white;
+            background-color: red;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: darkred;
+        }
+
+        hr {
+            border: 1px solid #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Relatório Mensal</h1>
+
+        <form method="POST">
+            <label for="datepicker">Selecione o Mês e Ano:</label>
+            <input type="text" id="datepicker" name="data" required>
+
+            <button type="submit" class="btn">Gerar Relatório</button>
+        </form>
+
+        {% if relatorio %}
+            <h2>Relatório de Garantias - {{ mes }}/{{ ano }}</h2>
+            <div class="relatorio-item">
+                {% for item in relatorio %}
+                    <p><strong>Usuário:</strong> {{ item.username }}</p>
+                    <p><strong>Produto:</strong> {{ item.product_name }}</p>
+                    <p><strong>Impedância:</strong> {{ item.impedance }}</p>
+                    <p><strong>Polegadas:</strong> {{ item.size_in_inches }}"</p>
+                    <p><strong>Total:</strong> {{ item.total }}</p>
+                    <hr>
+                {% endfor %}
+                <h3>Total Geral do Mês: {{ total_geral }}</h3>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        $(function() {
+            $("#datepicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                showButtonPanel: true,
+                dateFormat: 'mm/yy',
+                onClose: function(dateText, inst) { 
+                    $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
